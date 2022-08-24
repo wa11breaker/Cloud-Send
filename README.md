@@ -42,6 +42,8 @@ service firebase.storage {
   }
 }
 ```
+## Credit
+[Rive animation](https://rive.app/community/798-1554-tree-demo/)
 
 ## License
 
