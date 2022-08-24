@@ -9,7 +9,7 @@ Cloud Send is a flutter application that uses Firebase storage for storage, bloc
 - [x] Upload and share
 - [ ] Login Signup using firebase auth
 - [ ] Delete file after 7 days
-- [ ] Display QR code of link once the file is uploaded
+- [x] Display QR code of link once the file is uploaded
 - [ ] File view count and download count
 - [ ] Welcome screen for downloading file
 
