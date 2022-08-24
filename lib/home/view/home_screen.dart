@@ -48,18 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            StringConstnat.appName,
+                            StringConstants.appName,
                             style: TextStyle(
                               fontSize: 34,
-                              color: AppColor.pirmary,
+                              color: AppColor.primary,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            StringConstnat.uploadText,
+                            StringConstants.uploadText,
                             style: TextStyle(
                               fontSize: 16,
-                              color: AppColor.pirmary.withOpacity(0.8),
+                              color: AppColor.primary.withOpacity(0.8),
                               fontWeight: FontWeight.w300,
                             ),
                           ),
@@ -90,11 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Ink(
                                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                                 decoration: BoxDecoration(
-                                  color: AppColor.pirmary,
+                                  color: AppColor.primary,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Text(
-                                  StringConstnat.uploadNew,
+                                  StringConstants.uploadNew,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: AppColor.white,
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
-                                ('${state.progress!.toStringAsFixed(1)}% ') + StringConstnat.uploaded,
+                                ('${state.progress!.toStringAsFixed(1)}% ') + StringConstants.uploaded,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: AppColor.white,
@@ -128,11 +128,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Ink(
                                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                                 decoration: BoxDecoration(
-                                  color: AppColor.pirmary,
+                                  color: AppColor.primary,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Text(
-                                  StringConstnat.uploadFile,
+                                  StringConstants.uploadFile,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: AppColor.white,
@@ -163,7 +163,7 @@ class _LeftSideWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        color: AppColor.pirmary,
+        color: AppColor.primary,
         child: RiveAnimation.asset(
           'assets/rive/tree.riv',
           onInit: onRiveInit,
