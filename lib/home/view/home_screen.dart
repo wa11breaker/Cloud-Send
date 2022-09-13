@@ -1,3 +1,4 @@
+import 'package:file_share/home/widgets/upload_failed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _RightSideWidget extends StatefulWidget {
-  const _RightSideWidget({super.key});
+  const _RightSideWidget();
 
   @override
   State<_RightSideWidget> createState() => _RightSideWidgetState();
@@ -68,6 +69,8 @@ class _RightSideWidgetState extends State<_RightSideWidget> {
                   const SizedBox(height: 32),
                   if (state.status == Status.success)
                     UploadSuccessWidget(state: state)
+                  else if (state.status == Status.failed)
+                    UploadFailedWidget(state: state)
                   else if (state.status == Status.loading)
                     UploadingWidget(state: state)
                   else
@@ -97,7 +100,8 @@ class _LeftSideWidgetState extends State<_LeftSideWidget> {
   SMIInput? _pressInput;
 
   void _onRiveInit(Artboard artboard) {
-    final controller = StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    final controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
     artboard.addController(controller!);
     _pressInput = controller.inputs.first;
   }

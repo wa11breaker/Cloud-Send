@@ -5,4 +5,6 @@ class StringConstants {
   static const uploading = 'Uploading...';
   static const uploaded = 'uploaded';
   static const uploadNew = 'Upload a new file';
+  static const fileTooLargeError =
+      'You can not upload files that are larger than 100Mb';
 }
