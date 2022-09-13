@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rive/rive.dart';
 
-import '../../core/string_constant.dart';
 import '../../theme/color.dart';
 import '../cubit/upload_file_cubit.dart';
 import '../widgets/upload_card.dart';
-import '../widgets/upload_success.dart';
-import '../widgets/uploading_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,7 +26,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _RightSideWidget extends StatefulWidget {
-  const _RightSideWidget({super.key});
+  const _RightSideWidget();
 
   @override
   State<_RightSideWidget> createState() => _RightSideWidgetState();
@@ -44,7 +40,7 @@ class _RightSideWidgetState extends State<_RightSideWidget> {
         color: AppColor.bgMenu,
         child: BlocBuilder<UploadFileCubit, UploadFileState>(
           builder: (context, state) {
-            return Center(
+            return const Center(
               child: UploadCardWidget(),
             );
           },

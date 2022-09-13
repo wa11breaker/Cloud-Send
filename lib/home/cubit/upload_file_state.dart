@@ -17,6 +17,7 @@ class UploadFileState {
     this.fileName,
     this.error,
     this.fileSize = 0.0,
+    this.file,
   });
 
   UploadFileState copyWith({
@@ -26,21 +27,23 @@ class UploadFileState {
     String? fileName,
     String? error,
     double? fileSize,
+    PlatformFile? file,
   }) {
-    return UploadFileState(
+    return UploadFileState._(
       status: status ?? this.status,
       progress: progress ?? this.progress,
       url: url ?? this.url,
       fileName: fileName ?? this.fileName,
       error: error ?? this.error,
       fileSize: fileSize ?? this.fileSize,
+      file: file ?? this.file,
     );
   }
 
   const UploadFileState.initial() : this._();
 
-  UploadFileState asFiledPicked(String fileName, double fileSize) {
-    return copyWith(status: Status.filePicked, fileName: fileName, fileSize: fileSize);
+  UploadFileState asFiledPicked({required PlatformFile file, required String fileName, required double fileSize}) {
+    return copyWith(status: Status.filePicked, fileName: fileName, fileSize: fileSize, file: file);
   }
 
   UploadFileState asSuccess(String url) {
@@ -61,13 +64,5 @@ class UploadFileState {
   final String? fileName;
   final String? error;
   final double? fileSize;
-
-  UploadFileState({
-    required this.status,
-    this.progress,
-    this.url,
-    this.fileName,
-    this.error,
-    this.fileSize,
-  });
+  final PlatformFile? file;
 }

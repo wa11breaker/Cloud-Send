@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
@@ -23,26 +21,23 @@ class UploadFileCubit extends Cubit<UploadFileState> {
 
     if (result != null) {
       emit(state.asFiledPicked(
-        result.files.first.name,
-        result.files.first.size.toDouble(),
+        file: result.files.first,
+        fileName: result.files.first.name,
+        fileSize: result.files.first.size.toDouble(),
       ));
-
-      // if (kIsWeb) {
-      //   voidUpload(
-      //     data: result.files.first.bytes!,
-      //     fileExtension: result.files.first.name.split('.').last,
-      //   );
-      // } else {
-      //   voidUpload(
-      //     data: await File(result.files.first.path!).readAsBytes(),
-      //     fileExtension: result.files.first.name.split('.').last,
-      //   );
-      // }
     }
   }
 
-  voidUpload({required Uint8List data, required String fileExtension}) async {
+  void discardSelection() {
+    emit(const UploadFileState.initial());
+  }
+
+  voidUpload() async {
     final fileName = uuid.v1();
+
+    final data = Platform.isMacOS ? await File(state.file!.path!).readAsBytes() : state.file!.bytes!;
+    final fileExtension = state.file!.name.split('.').last;
+
     final spaceRef = storageRef.child("files/$fileName.$fileExtension");
 
     spaceRef.putData(data).snapshotEvents.listen((taskSnapshot) {
@@ -50,7 +45,7 @@ class UploadFileCubit extends Cubit<UploadFileState> {
         case TaskState.running:
           final progress = 100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
           AppLogger.e("Upload is $progress% complete.");
-          emit(state.asLoading(progress.isNaN ? 0 : progress));
+          emit(state.asLoading(progress.isNaN ? 0 : double.parse(progress.toStringAsFixed(1))));
           break;
         case TaskState.paused:
           AppLogger.e("Upload is paused.");
