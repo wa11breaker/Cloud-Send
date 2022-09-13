@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
+import "dart:math";
 
 import 'package:file_picker/file_picker.dart';
+import 'package:file_share/core/string_constant.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,10 @@ class UploadFileCubit extends Cubit<UploadFileState> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
+      if (result.files.first.size > (100 * pow(2, 20))) {
+        emit(state.asError(StringConstants.fileTooLargeError));
+        return;
+      }
       emit(state.asFiledPicked(result.files.first.name));
 
       if (kIsWeb) {
@@ -45,7 +50,8 @@ class UploadFileCubit extends Cubit<UploadFileState> {
     spaceRef.putData(data).snapshotEvents.listen((taskSnapshot) {
       switch (taskSnapshot.state) {
         case TaskState.running:
-          final progress = 100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+          final progress =
+              100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
           AppLogger.e("Upload is $progress% complete.");
           emit(state.asLoading(progress.isNaN ? 0 : progress));
           break;
