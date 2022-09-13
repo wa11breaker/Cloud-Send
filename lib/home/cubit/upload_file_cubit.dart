@@ -22,19 +22,22 @@ class UploadFileCubit extends Cubit<UploadFileState> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      emit(state.asFiledPicked(result.files.first.name));
+      emit(state.asFiledPicked(
+        result.files.first.name,
+        result.files.first.size.toDouble(),
+      ));
 
-      if (kIsWeb) {
-        voidUpload(
-          data: result.files.first.bytes!,
-          fileExtension: result.files.first.name.split('.').last,
-        );
-      } else {
-        voidUpload(
-          data: await File(result.files.first.path!).readAsBytes(),
-          fileExtension: result.files.first.name.split('.').last,
-        );
-      }
+      // if (kIsWeb) {
+      //   voidUpload(
+      //     data: result.files.first.bytes!,
+      //     fileExtension: result.files.first.name.split('.').last,
+      //   );
+      // } else {
+      //   voidUpload(
+      //     data: await File(result.files.first.path!).readAsBytes(),
+      //     fileExtension: result.files.first.name.split('.').last,
+      //   );
+      // }
     }
   }
 
