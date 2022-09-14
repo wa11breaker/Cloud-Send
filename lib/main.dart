@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cloud send',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         iconTheme: const IconThemeData(color: AppColor.primary),
       ),
       home: const HomeScreen(),

@@ -19,13 +19,15 @@ class AppButton extends StatelessWidget {
   final ButtonType buttonType;
   final double progress;
 
+  final double buttonHeight = 56;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, builder) {
       return InkWell(
         onTap: onTap,
         child: Container(
-          height: 72,
+          height: buttonHeight,
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
@@ -37,7 +39,7 @@ class AppButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 child: Center(
                   child: AnimatedContainer(
-                    height: 72,
+                    height: buttonHeight,
                     width: builder.maxWidth * (progress / 100),
                     duration: const Duration(milliseconds: 100),
                     color: AppColor.green,

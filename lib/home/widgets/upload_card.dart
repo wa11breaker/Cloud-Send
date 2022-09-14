@@ -13,8 +13,33 @@ class UploadCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String buttonTitle(UploadFileState state) {
+      if (state.status == Status.success) {
+        return 'Uploaded';
+      } else if (state.status == Status.loading) {
+        return '${state.progress}% Uploaded';
+      } else if (state.status == Status.filePicked) {
+        return 'Upload';
+      } else {
+        return 'Pick a File';
+      }
+    }
+
+    void onButtonTap(UploadFileState state) {
+      if (state.status == Status.loading) {
+        return;
+      }
+
+      if (state.status == Status.filePicked) {
+        context.read<UploadFileCubit>().voidUpload();
+        return;
+      }
+
+      context.read<UploadFileCubit>().pickFile();
+    }
+
     return Container(
-      width: 400,
+      width: 380,
       height: 575,
       decoration: BoxDecoration(
         color: AppColor.bgSurface,
@@ -44,26 +69,9 @@ class UploadCardWidget extends StatelessWidget {
               if (state.status != Status.uninitialized && state.status != Status.success) const _PickedFileWidget(),
               if (state.status == Status.success) const _UploadedFileWidget(),
               AppButton(
-                title: state.status == Status.success
-                    ? 'Uploaded'
-                    : state.status == Status.loading
-                        ? '${state.progress}% Uploaded'
-                        : state.status == Status.filePicked
-                            ? 'Upload'
-                            : 'Pick a File',
+                title: buttonTitle(state),
                 progress: state.progress ?? 0,
-                onTap: () {
-                  if (state.status == Status.loading) {
-                    return;
-                  }
-
-                  if (state.status == Status.filePicked) {
-                    context.read<UploadFileCubit>().voidUpload();
-                    return;
-                  }
-
-                  context.read<UploadFileCubit>().pickFile();
-                },
+                onTap: () => onButtonTap(state),
               ),
             ],
           );
@@ -152,12 +160,12 @@ class _UploadedFileWidgetState extends State<_UploadedFileWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             QrImage(
-              data: state.url ?? '',
-              version: QrVersions.auto,
-              size: 128.0,
-              backgroundColor: AppColor.primary,
-              padding: const EdgeInsets.all(4),
-            ),
+                data: state.url ?? '',
+                version: QrVersions.auto,
+                size: 100.0,
+                backgroundColor: AppColor.primary,
+                padding: const EdgeInsets.all(4),
+                gapless: false),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -179,7 +187,7 @@ class _UploadedFileWidgetState extends State<_UploadedFileWidget> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          copied ? 'Copied' : 'Click to copy url',
+                          copied ? 'Copied' : 'Click to copy the url',
                           style: AppTextStyle.body2.copyWith(
                             color: copied ? AppColor.green : AppColor.textDim,
                           ),

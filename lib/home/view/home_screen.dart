@@ -25,14 +25,9 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _RightSideWidget extends StatefulWidget {
+class _RightSideWidget extends StatelessWidget {
   const _RightSideWidget();
 
-  @override
-  State<_RightSideWidget> createState() => _RightSideWidgetState();
-}
-
-class _RightSideWidgetState extends State<_RightSideWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -50,19 +45,22 @@ class _RightSideWidgetState extends State<_RightSideWidget> {
   }
 }
 
-class _LeftSideWidget extends StatefulWidget {
+class _LeftSideWidget extends StatelessWidget {
   const _LeftSideWidget();
-  @override
-  State<_LeftSideWidget> createState() => _LeftSideWidgetState();
-}
 
-class _LeftSideWidgetState extends State<_LeftSideWidget> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width / 1.6;
     return Container(
       width: width,
-      color: AppColor.bgSurface,
+      decoration: const BoxDecoration(
+        color: AppColor.bgSurface,
+        image: DecorationImage(
+          image: AssetImage('assets/images/pattern.png'),
+          fit: BoxFit.cover,
+          opacity: 0.25,
+        ),
+      ),
     );
   }
 }
