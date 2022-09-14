@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +8,7 @@ import '../cubit/upload_file_cubit.dart';
 import '../widgets/upload_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +33,12 @@ class _RightSideWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: ColoredBox(
         color: AppColor.bgMenu,
         child: BlocBuilder<UploadFileCubit, UploadFileState>(
           builder: (context, state) {
             return const Center(
-              child: UploadCardWidget(),
+              child: UploadCardWidget(key: Key('uploadCardKey')),
             );
           },
         ),

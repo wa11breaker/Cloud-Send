@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
 import '../../core/string_constant.dart';
 import '../../theme/color.dart';
 import '../../theme/text.dart';
@@ -31,7 +34,7 @@ class UploadCardWidget extends StatelessWidget {
       }
 
       if (state.status == Status.filePicked) {
-        context.read<UploadFileCubit>().voidUpload();
+        context.read<UploadFileCubit>().uploadFile();
         return;
       }
 
@@ -82,61 +85,59 @@ class UploadCardWidget extends StatelessWidget {
 }
 
 class _PickedFileWidget extends StatelessWidget {
-  const _PickedFileWidget({
-    Key? key,
-  }) : super(key: key);
+  const _PickedFileWidget();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UploadFileCubit, UploadFileState>(builder: (context, state) {
-      return Row(
-        children: [
-          Container(
-            width: 40,
-            height: 52,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: AppColor.primary,
+    return BlocBuilder<UploadFileCubit, UploadFileState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            Container(
+              width: 40,
+              height: 52,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: AppColor.primary,
+              ),
+              child: const Icon(
+                Icons.file_present,
+                color: AppColor.bgSurface,
+              ),
             ),
-            child: const Icon(
-              Icons.file_present,
-              color: AppColor.bgSurface,
+            const SizedBox(width: 18),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${state.fileSize} MB',
+                    style: AppTextStyle.body1,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    state.fileName!,
+                    maxLines: 1,
+                    style: AppTextStyle.body2,
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 18),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${state.fileSize} MB',
-                  style: AppTextStyle.body1,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  state.fileName!,
-                  maxLines: 1,
-                  style: AppTextStyle.body2,
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              context.read<UploadFileCubit>().discardSelection();
-            },
-            icon: const Icon(Icons.close),
-          )
-        ],
-      );
-    });
+            IconButton(
+              onPressed: () {
+                context.read<UploadFileCubit>().discardSelection();
+              },
+              icon: const Icon(Icons.close),
+            )
+          ],
+        );
+      },
+    );
   }
 }
 
 class _UploadedFileWidget extends StatefulWidget {
-  const _UploadedFileWidget({
-    Key? key,
-  }) : super(key: key);
+  const _UploadedFileWidget();
 
   @override
   State<_UploadedFileWidget> createState() => _UploadedFileWidgetState();
@@ -160,12 +161,12 @@ class _UploadedFileWidgetState extends State<_UploadedFileWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             QrImage(
-                data: state.url ?? '',
-                version: QrVersions.auto,
-                size: 100.0,
-                backgroundColor: AppColor.primary,
-                padding: const EdgeInsets.all(4),
-                gapless: false),
+              data: state.url ?? '',
+              size: 100,
+              backgroundColor: AppColor.primary,
+              padding: const EdgeInsets.all(4),
+              gapless: false,
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
