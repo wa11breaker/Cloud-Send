@@ -43,10 +43,6 @@ service firebase.storage {
 }
 ```
 
-## Credit
-[Rive animation](https://rive.app/community/798-1554-tree-demo/)
->>>>>>> ed538eea5a4d4575dfd7538f32ecaef1e0bbd5c2
-
 ## License
 
 MIT

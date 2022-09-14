@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'upload_file_cubit.dart';
 
 enum Status {
@@ -15,6 +16,8 @@ class UploadFileState {
     this.url,
     this.fileName,
     this.error,
+    this.fileSize = 0.0,
+    this.file,
   });
 
   UploadFileState copyWith({
@@ -23,20 +26,24 @@ class UploadFileState {
     String? url,
     String? fileName,
     String? error,
+    double? fileSize,
+    PlatformFile? file,
   }) {
     return UploadFileState._(
       status: status ?? this.status,
-      progress: progress,
+      progress: progress ?? this.progress,
+      url: url ?? this.url,
       fileName: fileName ?? this.fileName,
       error: error ?? this.error,
-      url: url,
+      fileSize: fileSize ?? this.fileSize,
+      file: file ?? this.file,
     );
   }
 
   const UploadFileState.initial() : this._();
 
-  UploadFileState asFiledPicked(String fileName) {
-    return copyWith(status: Status.filePicked, fileName: fileName);
+  UploadFileState asFiledPicked({required PlatformFile file, required String fileName, required double fileSize}) {
+    return copyWith(status: Status.filePicked, fileName: fileName, fileSize: fileSize, file: file);
   }
 
   UploadFileState asSuccess(String url) {
@@ -56,4 +63,6 @@ class UploadFileState {
   final String? url;
   final String? fileName;
   final String? error;
+  final double? fileSize;
+  final PlatformFile? file;
 }
