@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
@@ -42,7 +43,7 @@ class UploadFileCubit extends Cubit<UploadFileState> {
   Future<void> uploadFile() async {
     final fileName = uuid.v1();
 
-    final data = Platform.isMacOS ? await File(state.file!.path!).readAsBytes() : state.file!.bytes!;
+    final data = kIsWeb ? state.file!.bytes! : await File(state.file!.path!).readAsBytes();
     final fileExtension = state.file!.name.split('.').last;
 
     final spaceRef = storageRef.child('files/$fileName.$fileExtension');

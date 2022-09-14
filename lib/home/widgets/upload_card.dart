@@ -154,7 +154,6 @@ class _UploadedFileWidgetState extends State<_UploadedFileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    copied = false;
     return BlocBuilder<UploadFileCubit, UploadFileState>(
       builder: (context, state) {
         return Row(
